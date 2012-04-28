@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>2stepAuth</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="css/style.css">
+	<!-- Color palette base: http://www.colourlovers.com/palette/482416/Wasabi_Suicide -->
+</head>
+<body>
+<header>
+	<h1>2stepAuth</h1>
+</header>
+<div id="main" role="main">
+	<div id="username_div">
+		<form id="username_form">
+			<h2>What is your username?</h2>
+			<input type="text" id="username_input" />
+			<input type="submit" id="username_submit" />
+		</form>
+	</div>
+	<div id="hash_div" style="display:none;">
+		<h2 id="hash_code">Loading...</h2>
+		<h3>New code in 0:<span id="countdown_clock"></span></h3>
+		<h4>Your username is <span id="username_span"></span>. <a href="#" id="reset_link">Click here to change it.</a></h4>
+	</div>
+</div>
+<footer>
+    2stepAuth is written by <a href="" target="_blank">Justin Swanson</a>.
+</footer>
+
+<script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+
+</body>
+</html>
