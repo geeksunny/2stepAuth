@@ -6,18 +6,18 @@
 
 if ($_REQUEST['time_check'] == 'y')
 {
-	exit((string)time());
+	exit((string)time()."||".date_default_timezone_get());
 }
 elseif ($_REQUEST['user'] != '' && $_REQUEST['hash'] != '')
 {
-	$seconds = (date("s",$client_time+$time_diff) < 30) ? "00" : "30";
+	$seconds = (date("s",time()) < 30) ? "00" : "30";
 
 	// We will check the given hash against the real-time hash in addition to the past two historical hashes.
-	$hash1 = crc32($_REQUEST['user']."-".date("Y-m-d H:i",time()).$seconds);
-	$hash2 = crc32($_REQUEST['user']."-".date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i",time()).$seconds." -30 seconds")));
-	$hash3 = crc32($_REQUEST['user']."-".date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i",time()).$seconds." -60 seconds")));
+	$hash1 = crc32($_REQUEST['user']."-".date("Y-m-d H:i",time()).':'.$seconds);
+	$hash2 = crc32($_REQUEST['user']."-".date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i",time()).':'.$seconds." -30 seconds")));
+	$hash3 = crc32($_REQUEST['user']."-".date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i",time()).':'.$seconds." -60 seconds")));
 
-	if ($hash1 == $_REQUEST['hash'] || $hash2 == $_REQUEST['hash'] || $hash3 == $_REQUEST['hash'])
+	if (in_array($_REQUEST['hash'],array($hash1,$hash2,$hash3)))
 		$result = "success";
 	else
 		$result = "failure";
@@ -28,5 +28,4 @@ else
 {
 	echo "ERROR: Missing Parameters.";
 }
-
 ?>

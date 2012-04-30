@@ -36,15 +36,14 @@ function curl_post($url, $post_string, $method = 'post')
 }
 
 //======= Code ========//
-$server_time = curl_post($server,"time_check=y");
-$client_time = time();
-$time_diff = $client_time-$server_time;
+$server_time = explode("||",curl_post($server,"time_check=y"));
+date_default_timezone_set($server_time[1]);
 
 $uname = $_REQUEST['user'];
 
-$seconds = (date("s",$client_time+$time_diff) < 30) ? "00" : "30";
+$seconds = @(date("s",$server_time[0]) < 30) ? "00" : "30";
 
-$hash = crc32($uname."-".date("Y-m-d H:i",$client_time+$time_diff).$seconds);
+$hash = @crc32($uname."-".date("Y-m-d H:i",$server_time[0]).':'.$seconds);
 
 // Return the hash!
 exit((string)$hash);
