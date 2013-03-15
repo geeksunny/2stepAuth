@@ -1,5 +1,4 @@
-$(document).ready(function()
-{
+$(document).ready(function() {
 	$("#username_form").submit(function(e) {
 		e.preventDefault();
 
@@ -23,46 +22,39 @@ $(document).ready(function()
 			$("#username_div").slideDown("200");
 		})
 	});
-
 });
 
 var username;
 var countdown = 30;
 var interval;
 
-function startProcess()
-{
+function startProcess() {
 	$("#countdown_clock").html(countdown);
 	getHash();
 	interval = setInterval("timer()",1000);
 }
 
-function killProcess()
-{
+function killProcess() {
 	clearInterval(interval);
 }
 
-function timer()
-{
+function timer() {
 	countdown -= 1;
-	if (countdown == 0)
-	{
+	if (countdown == 0) {
 		getHash();
 		countdown = 30;
 	}
 	if (console) { console.log("timer: "+countdown); }
-	$("#countdown_clock").html(countdown);
+	$("#countdown_clock").html(pad(countdown, 2));
 }
 
-function getHash()
-{
+function getHash() {
 	$.ajax({
 		type: "POST",
 		url: "get_hash.php",
 		data: "user="+username,
 		success: function(data) {
-			if (console)
-			{
+			if (console) {
 				console.log("username: "+username);
 				console.log("Response: "+data);
 			}
@@ -73,4 +65,13 @@ function getHash()
 			alert("An error has occurred...");
 		}
 	});
+}
+
+function pad(n, len) {
+	s = n.toString();
+	if (s.length < len) {
+		s = ('0000000000' + s).slice(-len);
+	}
+
+	return s;
 }
